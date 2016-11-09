@@ -61,11 +61,27 @@ class BasketballPlayer < Athlete
   def method_missing(method_name, *args, &blk)
     # puts "Ha I got you!"
 
+    # if method_name[0..2] == "is_"
+    #   puts "I am #{method_name[3..-1]}!"
+    # else
+    #   super
+    # end
+
     if method_name[0..2] == "is_"
-      puts "I am #{method_name[3..-1]}!"
+      puts "Define method when first called."
+      self.class.class_eval do
+        define_method(method_name) do
+          puts "I am #{method_name[3..-1]}!"
+        end
+      end
+      self.send(method_name)
     else
       super
     end
+  end
+
+  def respond_to_missing?(method, include_private = false)
+    method[0..2] == "is_" || super
   end
 end
 
@@ -74,3 +90,5 @@ puts "---First time called the method---"
 puts li_yi.methods.include?(:is_dribbling)
 li_yi.is_dribbling
 puts li_yi.methods.include?(:is_dribbling)
+puts "---Called the same method later---"
+li_yi.is_dribbling
