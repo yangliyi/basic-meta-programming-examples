@@ -59,12 +59,18 @@ end
 
 class BasketballPlayer < Athlete
   def method_missing(method_name, *args, &blk)
-    puts "Ha I got you!"
-  end
+    # puts "Ha I got you!"
 
+    if method_name[0..2] == "is_"
+      puts "I am #{method_name[3..-1]}!"
+    else
+      super
+    end
+  end
 end
 
 li_yi = BasketballPlayer.new
 puts "---First time called the method---"
+puts li_yi.methods.include?(:is_dribbling)
 li_yi.is_dribbling
-
+puts li_yi.methods.include?(:is_dribbling)
