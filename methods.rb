@@ -51,3 +51,20 @@ ly = WebDeveloper.new
 ly.code
 ly.can_write_ruby?
 ly.can_write_javascript?
+
+# Example: method_missing
+
+class Athlete
+end
+
+class BasketballPlayer < Athlete
+  def method_missing(method_name, *args, &blk)
+    puts "Ha I got you!"
+  end
+
+end
+
+li_yi = BasketballPlayer.new
+puts "---First time called the method---"
+li_yi.is_dribbling
+
